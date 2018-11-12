@@ -4,15 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+// use Hero;
+// use Legionnaire as legion;
+// use Praetorian as praet;
+// use Imperian as imp;
+// use Army as army;
+// use Player as player;
+
 class game extends Controller 
 {
-use App\Http\Controllers\Hero;
-use App\Http\Controllers\Legionnaire;
-use App\Http\Controllers\Praetorian;
-use App\Http\Controllers\Imperian;
-use App\Http\Controllers\Army;
-use App\Http\Controllers\Player;
+    
 
+    function game() 
+    {   
+        $data = array(
+            'player1'=> new Player('1'),
+            'player2'=> new Player('2'),
+            'army' => new Army(),
+        );
+        return view('game')->with('classes', $data);
+    }
 }
 
 
@@ -91,9 +102,11 @@ class Army {
 }
 
 class Player {
+    
 
     public function __construct($name) {
         $this->name = $name;
+        $this->army = new Army();
     }
 
     public $name = '';
@@ -137,16 +150,13 @@ class Player {
 }
 
 trait Paid {
-    use App\Http\Controllers\Hero;
-    use App\Http\Controllers\Legionnaire;
-    use App\Http\Controllers\Praetorian;
-    use App\Http\Controllers\Imperian;
+    
     public $battleCount = 1.5;
     
 }
 
 class paidPlayer {
-    use App\Http\Controllers\Paid;
+    use Paid;
 
     function upgrade() {
         foreach($this->army->units as $key => $value) {

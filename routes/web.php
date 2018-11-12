@@ -13,8 +13,6 @@
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware('web');
-
-Route::get('/hi', function () {
-    return 'hi';
 });
+
+Route::get('/game', 'game@game');
